@@ -9,9 +9,7 @@
     "node": "hardhat node",
     "deploy:localhost": "hardhat run scripts/deploy.js --network localhost",
     "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
-
     "dev": "npm --prefix frontend run dev",
-
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
     "start": "npm --prefix frontend run dev"
@@ -21,7 +19,8 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@nomicfoundation/hardhat-ethers": "^4.0.9",
+    "@nomicfoundation/hardhat-ethers": "^4.0.10",
+    "@nomicfoundation/hardhat-toolbox": "^7.0.0",
     "dotenv": "^17.4.2",
     "hardhat": "^3.4.2"
   }

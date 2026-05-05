@@ -5,9 +5,10 @@ const PINATA_PIN_FILE_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS";
 /**
  * Uploads a File object to IPFS through Pinata.
  * @param {File} file Browser File
+ * @param {(percent: number) => void} [onProgress] Optional progress callback
  * @returns {Promise<{ cid: string }>} CID (IpfsHash)
  */
-export async function uploadFileToIPFS(file) {
+export async function uploadFileToIPFS(file, onProgress) {
   const jwt = import.meta.env.VITE_PINATA_JWT;
   if (!jwt) {
     throw new Error("Missing VITE_PINATA_JWT (see frontend/.env.example)");
@@ -31,6 +32,12 @@ export async function uploadFileToIPFS(file) {
       Authorization: `Bearer ${jwt}`,
       // Let the browser set the multipart boundary header
     },
+    onUploadProgress: onProgress
+      ? (event) => {
+          if (!event.total) return;
+          onProgress(Math.round((event.loaded * 100) / event.total));
+        }
+      : undefined,
   });
 
   const cid = res?.data?.IpfsHash;
